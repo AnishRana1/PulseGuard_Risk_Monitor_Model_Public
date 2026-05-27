@@ -1,0 +1,7 @@
+# Minimal packages for reading/testing public scaffold only
+# The production deployed app has a fuller private dependency set.
+pandas
+numpy
+scikit-learn
+matplotlib
+streamlit
