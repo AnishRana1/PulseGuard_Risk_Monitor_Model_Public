@@ -6,17 +6,11 @@
 **Fully working deployed version:** https://crash-monitor.streamlit.app  
 **Purpose of this repo:** recruiter-readable technical codebase, not a cloneable replacement for the deployed app.
 
-## Deployed app screenshot
+## Main deployed dashboard
 
-> **Placeholder:** add a screenshot of the deployed PulseGuard Crash Risk Monitor app here before publishing the repository.
->
-> Suggested file path: `docs/screenshots/deployed_app_overview.png`
->
-> Suggested Markdown once added:
->
-> ```markdown
-> ![PulseGuard Crash Risk Monitor deployed app overview](docs/screenshots/deployed_app_overview.png)
-> ```
+The first screen below is the main dashboard state when PulseGuard is loaded with a selected ticker, timeframe and prediction mode. It shows the headline model diagnostics, cache status, risk summary metrics and the first dashboard tab used to inspect market crash-risk signals.
+
+![PulseGuard main dashboard on load](docs/screenshots/01-main-dashboard.png)
 
 ## Why this repository exists
 
@@ -27,6 +21,12 @@ In other words:
 - the **live app** proves the product works;
 - this **public scaffold** proves the architecture and coding approach;
 - the **private repo** contains the full implementation.
+
+## Method summary and reproducibility controls
+
+The deployed app includes an explanatory panel describing the data source, prediction task, ensemble model, validation mode, baselines, optimisation process and reproducibility design. This makes the public-facing dashboard self-contained for reviewers who want to understand what the model is doing before inspecting the code.
+
+![PulseGuard method summary and reproducibility panel](docs/screenshots/08-method-summary-panel.png)
 
 ## What recruiters can inspect here
 
@@ -58,6 +58,10 @@ PulseGuard_Risk_Monitor_Model_Public/
 │   └── test_public_pipeline.py
 └── LICENSE
 ```
+
+The sidebar exposes the core configuration controls used by the deployed app, including ticker, timeframe and prediction-mode selection. These controls determine which cached model artefacts, risk labels and overlay settings are loaded.
+
+![PulseGuard sidebar data and prediction inputs](docs/screenshots/07-sidebar-inputs.png)
 
 ## What is intentionally withheld
 
@@ -94,7 +98,29 @@ Market data -> engineered features -> risk model -> calibrated risk signal ->
 exposure overlay -> simulated equity curve -> comparative metrics and charts
 ```
 
+The deployed dashboard visualises ML risk bands against close price movement, then compares the supervised risk probability with anomaly-detection baselines. This view is useful for checking whether the model identifies clusters of downside-risk warnings around relevant drawdown regimes rather than producing isolated, context-free alerts.
+
+![PulseGuard risk signals and model baseline comparison](docs/screenshots/02-risk-signals-and-baselines.png)
+
+The return and exposure view evaluates whether the model-driven overlay improves the percentage-return curve relative to buy-and-hold and baseline overlays. The exposure plot shows how the app converts risk classifications into position-sizing decisions over time.
+
+![PulseGuard percentage return curve and exposure plot](docs/screenshots/03-return-curve-and-exposure.png)
+
 However, this public version intentionally avoids exposing the exact production implementation. It should be read as a **technical exhibit** rather than a reproducible source release.
+
+## Deployed analytical views
+
+The Economic Ranking tab orders warning events by model probability, realised forward move and economic significance, allowing the most material warnings to be reviewed first. This supports post-hoc inspection of whether the largest warnings correspond to economically meaningful downside events.
+
+![PulseGuard economic ranking table and chart](docs/screenshots/04-economic-ranking.png)
+
+The selected-event explanation view breaks down an individual warning into its probability, threshold, realised label and feature-deviation drivers. This explains which engineered market features were most abnormal at the point where the model issued the warning.
+
+![PulseGuard selected-event explanation and feature deviations](docs/screenshots/05-event-explanation-feature-deviations.png)
+
+The optimisation controls expose a coarse-to-fine search workflow and downloadable optimisation artefacts for the selected ticker, timeframe and prediction mode. In the full deployed system, this is used to persist selected model and baseline parameter settings without rerunning expensive searches unnecessarily.
+
+![PulseGuard full optimisation controls](docs/screenshots/06-full-optimisation-controls.png)
 
 ## Local use
 
